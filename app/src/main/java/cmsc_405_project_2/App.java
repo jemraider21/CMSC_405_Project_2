@@ -3,6 +3,8 @@ package cmsc_405_project_2;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import cmsc_405_project_2.utils.ThreeDShapeDrawer;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.*;
 
@@ -53,51 +55,8 @@ public class App extends GLJPanel implements GLEventListener, KeyListener {
     double rotateY = -15;
     double rotateZ = 0;
 
-    private void square(GL2 gl2, double r, double g, double b) {
-        gl2.glColor3d(r, g, b);
-        gl2.glBegin(GL2.GL_TRIANGLE_FAN);
-        gl2.glVertex3d(-0.5, -0.5, 0.5);
-        gl2.glVertex3d(0.5, -0.5, 0.5);
-        gl2.glVertex3d(0.5, 0.5, 0.5);
-        gl2.glVertex3d(-0.5, 0.5, 0.5);
-        gl2.glEnd();
-    }
-
-    private void cube(GL2 gl2, double size) {
-        gl2.glPushMatrix();
-        gl2.glScaled(size, size, size); // scale unit cube to desired size
-        // Move the squares to offset 3,3
-        gl2.glTranslated(3, 3, 0);
-        square(gl2, 1, 0, 0); // red front face
-
-        gl2.glPushMatrix();
-        gl2.glRotated(90, 0, 1, 0);
-
-        square(gl2, 0, 1, 0); // green right face
-        gl2.glPopMatrix();
-
-        gl2.glPushMatrix();
-        gl2.glRotated(-90, 1, 0, 0);
-        square(gl2, 0, 0, 1); // blue top face
-        gl2.glPopMatrix();
-
-        gl2.glPushMatrix();
-        gl2.glRotated(180, 0, 1, 0);
-        square(gl2, 0, 1, 1); // cyan back face
-        gl2.glPopMatrix();
-
-        gl2.glPushMatrix();
-        gl2.glRotated(-90, 0, 1, 0);
-        square(gl2, 1, 0, 1); // magenta left face
-        gl2.glPopMatrix();
-
-        gl2.glPushMatrix();
-        gl2.glRotated(90, 1, 0, 0);
-        square(gl2, 1, 1, 0); // yellow bottom face
-        gl2.glPopMatrix();
-
-        gl2.glPopMatrix(); // Restore matrix to its state before cube() was called.
-    }
+    
+    
 
     // -------------------- GLEventListener Methods -------------------------
 
@@ -116,7 +75,9 @@ public class App extends GLJPanel implements GLEventListener, KeyListener {
         gl2.glRotated(rotateY, 0, 1, 0);
         gl2.glRotated(rotateX, 1, 0, 0);
 
-        cube(gl2, 1);
+        ThreeDShapeDrawer.cube(gl2, 1);
+
+        ThreeDShapeDrawer.pyramid(gl2, 1, 0, 0);
 
         // Add an Index Face set
         // Note using Graph paper is the best way to figure these vertices.
@@ -127,11 +88,11 @@ public class App extends GLJPanel implements GLEventListener, KeyListener {
         int[][] faceList = { { 0, 1, 2, 3 }, { 3, 2, 4 }, { 7, 3, 4, 5 }, { 2, 8, 5, 4 }, { 5, 8, 7 },
                 { 0, 3, 7, 6 }, { 0, 6, 9, 1 }, { 2, 1, 9, 8 }, { 6, 7, 8, 9 } };
 
-        for (int i = 0; i < faceList.length; i++) {
+        for (int[] ints : faceList) {
             gl2.glColor3f(1, 0, 1); // Set color for face number i.
             gl2.glBegin(GL2.GL_TRIANGLE_FAN);
-            for (int j = 0; j < faceList[i].length; j++) {
-                int vertexNum = faceList[i][j]; // Index for vertex j of face i.
+            for (int j = 0; j < ints.length; j++) {
+                int vertexNum = ints[j]; // Index for vertex j of face i.
                 double[] vertexCoords = vertexList[vertexNum]; // The vertex itself.
                 gl2.glVertex3dv(vertexCoords, 0);
             }
