@@ -116,6 +116,35 @@ public class TwoDShapeDrawer {
         }
     }
 
+    public void drawMovingCircle(final GL2 gl) {
+        int numVertices = 100; // The number of vertices to approximate the circle
+        float twoPi = (float) (2.0f * Math.PI);
+
+        gl.glLoadIdentity();
+        gl.glColor3f(1.0f, 1.0f, 1.0f); // Set color to white
+        gl.glBegin(GL2.GL_POLYGON);
+        for (int i = 0; i < numVertices; i++) {
+            float theta = twoPi * i / numVertices;
+            float x = Properties.circleRadius * (float) Math.cos(theta);
+            float y = Properties.circleRadius * (float) Math.sin(theta);
+            gl.glVertex2f(x, y);
+        }
+        gl.glEnd();
+
+        // Animate the circle size
+        if (Properties.circleGrowing) {
+            Properties.circleRadius += Properties.circleGrowthStep;
+            if (Properties.circleRadius >= Properties.circleMaxRadius) {
+                Properties.circleGrowing = false;
+            }
+        } else {
+            Properties.circleRadius -= Properties.circleGrowthStep;
+            if (Properties.circleRadius <= Properties.circleMinRadius) {
+                Properties.circleGrowing = true;
+            }
+        }
+    }
+
     public void drawMovingOctagon(final GL2 gl) {
         int numSides = 8; // An octagon has 8 sides
         float twoPi = (float) (2.0f * Math.PI);

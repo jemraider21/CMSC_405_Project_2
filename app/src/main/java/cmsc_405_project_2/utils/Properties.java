@@ -18,6 +18,13 @@ public class Properties {
     public static float hexagonDiagonalX = 1.0f;
     public static float hexagonDiagonalY = -1.0f;
 
+    // Circle related properties
+    public static float circleRadius = 0.1f; // Starting radius of the circle
+    public static boolean circleGrowing = true; // Direction of growth
+    public static final float circleMaxRadius = 0.5f; // Maximum radius
+    public static final float circleMinRadius = 0.1f; // Minimum radius
+    public static final float circleGrowthStep = 0.005f; // Increment of growth
+
     // Octagon related properties
     public static float octagonWidth = 0.1f; // Starting width of the octagon
     public static boolean octagonExpanding = true; // Direction of width change

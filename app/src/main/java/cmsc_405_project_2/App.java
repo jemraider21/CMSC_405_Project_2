@@ -49,6 +49,7 @@ public class App extends JFrame implements GLEventListener {
         shapeDrawer.drawMovingSquare(gl);
         shapeDrawer.drawMovingPentagon(gl);
         shapeDrawer.drawMovingHexagon(gl);
+        shapeDrawer.drawMovingCircle(gl);
         shapeDrawer.drawMovingOctagon(gl);
     }
 
