@@ -50,6 +50,13 @@ public class App extends JFrame implements GLEventListener {
         // Clear the drawing area
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
+        drawMovingTriangle(gl);
+        drawMovingSquare(gl);
+        drawMovingPentagon(gl);
+        drawMovingHexagon(gl);
+    }
+
+    private void drawMovingTriangle(final GL2 gl) {
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
 
@@ -72,7 +79,9 @@ public class App extends JFrame implements GLEventListener {
             if (triangleYPos < -1.0f)
                 triangleGoingUp = true;
         }
+    }
 
+    private void drawMovingSquare(final GL2 gl) {
         // Reset the current matrix
         gl.glLoadIdentity();
 
@@ -96,7 +105,9 @@ public class App extends JFrame implements GLEventListener {
             if (squareXPos < -1.0f)
                 squareGoingRight = true;
         }
+    }
 
+    private void drawMovingPentagon(final GL2 gl) {
         // Reset the current matrix
         gl.glLoadIdentity();
 
@@ -121,7 +132,9 @@ public class App extends JFrame implements GLEventListener {
         } else {
             diagonalMovement = -1.0f; // Reset to start again from bottom left
         }
+    }
 
+    private void drawMovingHexagon(final GL2 gl) {
         // Reset the current matrix
         gl.glLoadIdentity();
 
