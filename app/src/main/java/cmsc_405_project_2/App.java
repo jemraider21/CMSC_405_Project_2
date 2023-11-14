@@ -11,8 +11,9 @@ public class App extends JFrame implements GLEventListener {
     private boolean triangleGoingUp = true;
     private float squareXPos = -1.0f;
     private boolean squareGoingRight = true;
-    private final float triangleSpeed = 0.01f;
-    private final float squareSpeed = 0.01f;
+    private static final float TRIANGLE_SPEED = 0.01f;
+    private static final float SQUARE_SPEED = 0.01f;
+    private float diagonalMovement = -1.0f; // Start from bottom left
 
     public App() {
         // Setup OpenGL Version 2
@@ -24,7 +25,7 @@ public class App extends JFrame implements GLEventListener {
         this.setName("3D Moving Triangle and Square");
         this.getContentPane().add(glCanvas);
         this.setSize(400, 400);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         FPSAnimator animator = new FPSAnimator(glCanvas, 300, true);
         animator.start();
@@ -61,11 +62,11 @@ public class App extends JFrame implements GLEventListener {
 
         // Change the Y position of the triangle for the next frame
         if (triangleGoingUp) {
-            triangleYPos += triangleSpeed;
+            triangleYPos += TRIANGLE_SPEED;
             if (triangleYPos > 1.0f)
                 triangleGoingUp = false;
         } else {
-            triangleYPos -= triangleSpeed;
+            triangleYPos -= TRIANGLE_SPEED;
             if (triangleYPos < -1.0f)
                 triangleGoingUp = true;
         }
@@ -85,13 +86,38 @@ public class App extends JFrame implements GLEventListener {
 
         // Change the X position of the square for the next frame
         if (squareGoingRight) {
-            squareXPos += squareSpeed;
+            squareXPos += SQUARE_SPEED;
             if (squareXPos > 1.0f)
                 squareGoingRight = false;
         } else {
-            squareXPos -= squareSpeed;
+            squareXPos -= SQUARE_SPEED;
             if (squareXPos < -1.0f)
                 squareGoingRight = true;
+        }
+
+        // Reset the current matrix
+        gl.glLoadIdentity();
+
+        // Drawing the yellow pentagon
+        float pentagonSize = 0.2f; // Size of the pentagon
+        float pentagonXPos = diagonalMovement; // X position for the pentagon
+        float pentagonYPos = diagonalMovement; // Y position for the pentagon
+
+        gl.glTranslatef(pentagonXPos, pentagonYPos, 0.0f);
+        gl.glColor3f(1.0f, 1.0f, 0.0f); // Set the color to yellow
+        gl.glBegin(GL2.GL_POLYGON);
+        for (int i = 0; i < 5; i++) {
+            gl.glVertex2d(
+                    pentagonSize * Math.cos(i * 2 * Math.PI / 5),
+                    pentagonSize * Math.sin(i * 2 * Math.PI / 5));
+        }
+        gl.glEnd();
+
+        // Pentagon's position logic...
+        if (diagonalMovement < 1.0f) {
+            diagonalMovement += 0.005f; // Increase the diagonal position
+        } else {
+            diagonalMovement = -1.0f; // Reset to start again from bottom left
         }
     }
 
