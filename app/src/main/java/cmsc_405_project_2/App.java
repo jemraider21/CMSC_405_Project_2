@@ -14,6 +14,8 @@ public class App extends JFrame implements GLEventListener {
     private static final float TRIANGLE_SPEED = 0.01f;
     private static final float SQUARE_SPEED = 0.01f;
     private float diagonalMovement = -1.0f; // Start from bottom left
+    private float hexagonDiagonalX = 1.0f; // Start from bottom right
+    private float hexagonDiagonalY = -1.0f;
 
     public App() {
         // Setup OpenGL Version 2
@@ -118,6 +120,31 @@ public class App extends JFrame implements GLEventListener {
             diagonalMovement += 0.005f; // Increase the diagonal position
         } else {
             diagonalMovement = -1.0f; // Reset to start again from bottom left
+        }
+
+        // Reset the current matrix
+        gl.glLoadIdentity();
+
+        // Drawing the green hexagon
+        float hexagonSize = 0.2f; // Size of the hexagon
+
+        gl.glTranslatef(hexagonDiagonalX, hexagonDiagonalY, 0.0f);
+        gl.glColor3f(0.0f, 1.0f, 0.0f); // Set the color to green
+        gl.glBegin(GL2.GL_POLYGON);
+        for (int i = 0; i < 6; i++) {
+            gl.glVertex2d(
+                    hexagonSize * Math.cos(i * 2 * Math.PI / 6),
+                    hexagonSize * Math.sin(i * 2 * Math.PI / 6));
+        }
+        gl.glEnd();
+
+        // Hexagon's position logic...
+        if (hexagonDiagonalX > -1.0f && hexagonDiagonalY < 1.0f) {
+            hexagonDiagonalX -= 0.005f; // Decrease the X position
+            hexagonDiagonalY += 0.005f; // Increase the Y position
+        } else {
+            hexagonDiagonalX = 1.0f; // Reset to start again from bottom right
+            hexagonDiagonalY = -1.0f;
         }
     }
 
