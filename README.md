@@ -1,5 +1,8 @@
 # CMSC_405_Project_2
 
+## ChatGPT Link
+https://chat.openai.com/c/daf076ed-9acf-4857-9ce4-e72d6ecabf3f
+
 ## Requirements
 - java jdk 17
 - gradle
