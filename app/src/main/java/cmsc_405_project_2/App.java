@@ -46,11 +46,13 @@ public class App extends JFrame implements GLEventListener {
 
         // Clear the drawing area
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
 
-        // Drawing the triangle
+        // Drawing the red triangle
         gl.glTranslatef(0.0f, triangleYPos, 0.0f);
+        gl.glColor3f(1.0f, 0.0f, 0.0f); // Set the color to red
         gl.glBegin(GL.GL_TRIANGLES);
         gl.glVertex3f(0.0f, 0.5f, 0.0f);
         gl.glVertex3f(-0.5f, -0.5f, 0.0f);
@@ -71,8 +73,9 @@ public class App extends JFrame implements GLEventListener {
         // Reset the current matrix
         gl.glLoadIdentity();
 
-        // Drawing the square
+        // Drawing the blue square
         gl.glTranslatef(squareXPos, 0.0f, 0.0f);
+        gl.glColor3f(0.0f, 0.0f, 1.0f); // Set the color to blue
         gl.glBegin(GL2ES3.GL_QUADS);
         gl.glVertex3f(-0.25f, 0.25f, 0.0f);
         gl.glVertex3f(-0.25f, -0.25f, 0.0f);
