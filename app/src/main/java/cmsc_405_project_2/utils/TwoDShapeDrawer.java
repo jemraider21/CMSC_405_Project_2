@@ -116,4 +116,34 @@ public class TwoDShapeDrawer {
         }
     }
 
+    public void drawMovingOctagon(final GL2 gl) {
+        int numSides = 8; // An octagon has 8 sides
+        float twoPi = (float) (2.0f * Math.PI);
+
+        gl.glLoadIdentity();
+        // Translate to the top right corner
+        gl.glTranslatef(0.8f, 0.8f, 0.0f);
+        gl.glColor3f(0.5f, 0.0f, 0.5f); // Set color to purple
+        gl.glBegin(GL2.GL_POLYGON);
+        for (int i = 0; i < numSides; i++) {
+            float theta = twoPi * i / numSides;
+            float x = Properties.octagonWidth * (float) Math.cos(theta);
+            float y = Properties.octagonWidth * (float) Math.sin(theta);
+            gl.glVertex2f(x, y);
+        }
+        gl.glEnd();
+
+        // Animate the octagon width
+        if (Properties.octagonExpanding) {
+            Properties.octagonWidth += Properties.octagonWidthStep;
+            if (Properties.octagonWidth >= Properties.octagonMaxWidth) {
+                Properties.octagonExpanding = false;
+            }
+        } else {
+            Properties.octagonWidth -= Properties.octagonWidthStep;
+            if (Properties.octagonWidth <= Properties.octagonMinWidth) {
+                Properties.octagonExpanding = true;
+            }
+        }
+    }
 }

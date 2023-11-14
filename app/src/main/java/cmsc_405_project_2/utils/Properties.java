@@ -17,4 +17,11 @@ public class Properties {
     // Hexagon related properties
     public static float hexagonDiagonalX = 1.0f;
     public static float hexagonDiagonalY = -1.0f;
+
+    // Octagon related properties
+    public static float octagonWidth = 0.1f; // Starting width of the octagon
+    public static boolean octagonExpanding = true; // Direction of width change
+    public static final float octagonMaxWidth = 0.2f; // Maximum width
+    public static final float octagonMinWidth = 0.1f; // Minimum width
+    public static final float octagonWidthStep = 0.001f; // Increment of width change
 }
